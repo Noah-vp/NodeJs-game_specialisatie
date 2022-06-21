@@ -17,37 +17,11 @@ var player;
 var role;
 var objects = [];
 var networkItems = [];
-var globalData = {
-    player1: {
-        x: 100,
-        y: -100,
-        state: 'idle',
-        faceing: 'right',
-    },
-    player2: {
-        x: 100,
-        y: -100,
-        state: 'idle',
-        faceing: 'right',
-    },
-    player3: {
-        x: 100,
-        y: -100,
-        state: 'idle',
-        faceing: 'right',
-    },
-    player4: {
-        x: 100,
-        y: -100,
-        state: 'idle',
-        faceing: 'right',
-    }
-}
 
 
 function setup(){
     createCanvas(600, 600)
-    socket = io.connect('http://10.20.34.117:3000/')
+    socket = io.connect('http://192.168.2.12:3000/')
     socket.on('update', dataLoading)
     socket.on('playertag', playerIdMaker)
 
@@ -129,12 +103,14 @@ function draw(){
         fill(0);textSize(12);text("Player: " + playerId, 10, 30);
         player.show()
         player.move()
+        for(i = 0; i < objects.length; i++) {
+            objects[i].collision()
+        }
+        sendData();
     }
-
-    for(i = 0; i < objects.length; i++) {
-        objects[i].collision()
+    else{
+        fill(0);textSize(22);textFont(mainFont);text("Spectating", width/2-50, 30)
     }
-    sendData();
     for(i = 0; i < networkItems.length; i++){
         networkItems[i].show();
     }

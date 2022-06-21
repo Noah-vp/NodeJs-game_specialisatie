@@ -48,23 +48,23 @@ class Character{
                 else if(this.faceing == 'left'){
                     switch(playerId){
                         case 1:
-                            scale(-1, 1);image(playerOneIdle,-this.x - this.width, this.y, this.width, this.height)
+                            push();scale (-1, 1);image(playerOneIdle,-this.x - this.width, this.y, this.width, this.height);pop()
                             break;
                         case 2:
-                            scale(-1, 1);image(playerTwoIdle,-this.x - this.width, this.y, this.width, this.height)
+                            push();scale (-1, 1);image(playerTwoIdle,-this.x - this.width, this.y, this.width, this.height);pop()
                             break;
                         case 3:
-                            scale(-1, 1);image(playerThreeIdle,-this.x - this.width, this.y, this.width, this.height)
+                            push();scale (-1, 1);image(playerThreeIdle,-this.x - this.width, this.y, this.width, this.height);pop()
                             break;
                         case 4:
-                            scale(-1, 1);image(playerFourIdle,-this.x - this.width, this.y, this.width, this.height)
+                            push();scale (-1, 1);image(playerFourIdle,-this.x - this.width, this.y, this.width, this.height);pop()
                             break;
                         default:
                             ""
                     }   
                 }
                 break;
-            case 'runningLeft':
+            case 'runningRight':
                 switch(playerId){
                     case 1:
                         image(playerOneRun,this.x, this.y, this.width, this.height)
@@ -82,19 +82,19 @@ class Character{
                         ""
                 }  
                 break;
-            case 'runningRight':
+            case 'runningLeft':
                 switch(playerId){
                     case 1:
-                        scale(-1, 1);image(playerOneRun,-this.x - this.width, this.y, this.width, this.height)
+                        push();scale (-1, 1);image(playerOneRun,-this.x - this.width, this.y, this.width, this.height);pop()
                         break;
                     case 2:
-                        scale(-1, 1);image(playerTwoRun,-this.x - this.width, this.y, this.width, this.height)
+                        push();scale (-1, 1);image(playerTwoRun,-this.x - this.width, this.y, this.width, this.height);pop()
                         break;
                     case 3:
-                        scale(-1, 1);image(playerThreeRun,-this.x - this.width, this.y, this.width, this.height)
+                        push();scale (-1, 1);image(playerThreeRun,-this.x - this.width, this.y, this.width, this.height);pop()
                         break;
                     case 4:
-                        scale(-1, 1);image(playerFourRun,-this.x - this.width, this.y, this.width, this.height)
+                        push();scale (-1, 1);image(playerFourRun,-this.x - this.width, this.y, this.width, this.height);pop()
                         break;
                     default:
                         ""
@@ -137,10 +137,10 @@ class Character{
             this.yvel += this.m 
         }    
     if(this.xvel > 1){
-        this.state = 'runningRight'
+        this.state = 'runningLeft'
     }
     else if(this.xvel < -1){
-        this.state = 'runningLeft'
+        this.state = 'runningRight'
     }
     else{
         this.state = 'idle'
