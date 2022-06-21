@@ -25,6 +25,7 @@ class Character{
             this.faceing = 'left'
         }
     }
+    console.log(this.state)
     image(Pointer, this.x + 20, this.y-20, 20, 20)
         switch(this.state){
             case 'idle':
@@ -101,6 +102,42 @@ class Character{
                         ""
                     }
                 break;
+            case 'swing':
+                switch(this.faceing){
+                    case 'right':
+                        switch(playerId){
+                            case 1:
+                                image(playerOneAttack, this.x, this.y-30, 100, 100)
+                                break;
+                            case 2:
+                                image(playerTwoAttack, this.x, this.y-30, 100, 100)
+                                break;
+                            case 3:
+                                image(playerThreeAttack, this.x, this.y-30, 100, 100)
+                                break;
+                            case 4:
+                                image(playerFourAttack, this.x, this.y-30, 100, 100)
+                                break;
+                        }
+                        break;
+                    case 'left':
+                        switch(playerId){
+                            case 1:
+                                push();scale (-1, 1);image(playerOneAttack, -this.x - this.width, this.y-30, 100, 100);pop()
+                                break;
+                            case 2:
+                                push();scale (-1, 1);image(playerTwoAttack, -this.x - this.width, this.y-30, 100, 100);pop()
+                                break;
+                            case 3:
+                                push();scale (-1, 1);image(playerThreeAttack, -this.x - this.width, this.y-30, 100, 100);pop()
+                                break;
+                            case 4:
+                                push();scale (-1, 1);image(playerFourAttack, -this.x - this.width, this.y-30, 100, 100);pop()
+                                break;
+                        }
+                        break;
+                }
+                break;
         } 
     }
     //move the player
@@ -146,5 +183,51 @@ class Character{
     else{
         this.state = 'idle'
     }
+    }
+    attack(){
+        if (shoot){
+            switch(playerId){
+                case 1:
+                    if(playerOneAttack.getCurrentFrame() == 10){
+                        this.state = 'idle'
+                        playerOneAttack.setFrame(0)
+                        shoot = false
+                    }
+                    else{
+                        this.state = 'swing'
+                    }
+                break;
+                case 2:
+                    if(playerTwoAttack.getCurrentFrame() == 10){
+                        this.state = 'idle'
+                        playerTwoAttack.setFrame(0)
+                        shoot = false
+                    }
+                    else{
+                        this.state = 'swing'
+                    }
+                break;
+                case 3:
+                    if(playerThreeAttack.getCurrentFrame() == 10){
+                        this.state = 'idle'
+                        playerThreeAttack.setFrame(0)
+                        shoot = false
+                    }
+                    else{
+                        this.state = 'swing'
+                    }
+                break;
+                case 4:
+                    if(playerFourAttack.getCurrentFrame() == 10){
+                        this.state = 'idle'
+                        playerFourAttack.setFrame(0)
+                        shoot = false
+                    }
+                    else{
+                        this.state = 'swing'
+                    }
+                break;
+            }
+        }
     }
 }

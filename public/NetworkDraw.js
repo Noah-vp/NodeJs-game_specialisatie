@@ -83,7 +83,44 @@ class networkObject{
                         break;
                     default:
                         ""
-                }  
+                }
+                break;
+            case 'swing':
+                switch(this.faceing){
+                    case 'right':
+                        switch(this.id){
+                            case 1:
+                                image(playerOneAttack, this.x, this.y-30, 100, 100)
+                                break;
+                            case 2:
+                                image(playerTwoAttack, this.x, this.y-30, 100, 100)
+                                break;
+                            case 3:
+                                image(playerThreeAttack, this.x, this.y-30, 100, 100)
+                                break;
+                            case 4:
+                                image(playerFourAttack, this.x, this.y-30, 100, 100)
+                                break;
+                        }
+                        break;
+                    case 'left':
+                        switch(this.id){
+                            case 1:
+                                push();scale (-1, 1);image(playerOneAttack, -this.x - this.width, this.y-30, 100, 100);pop()
+                                break;
+                            case 2:
+                                push();scale (-1, 1);image(playerTwoAttack, -this.x - this.width, this.y-30, 100, 100);pop()
+                                break;
+                            case 3:
+                                push();scale (-1, 1);image(playerThreeAttack, -this.x - this.width, this.y-30, 100, 100);pop()
+                                break;
+                            case 4:
+                                push();scale (-1, 1);image(playerFourAttack, -this.x - this.width, this.y-30, 100, 100);pop()
+                                break;
+                        }
+                        break;
+                }
+            break;
         }
     }
 }

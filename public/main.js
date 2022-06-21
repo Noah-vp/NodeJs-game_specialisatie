@@ -1,3 +1,7 @@
+var shoot = false
+function mousePressed() {
+    shoot = true
+}
 function preload(){
     backgroundImg = loadImage('assets/Background.png');
     Pointer = loadImage('assets/arrow.png')
@@ -25,6 +29,7 @@ var player;
 var role;
 var objects = [];
 var networkItems = [];
+
 
 
 function setup(){
@@ -111,6 +116,7 @@ function draw(){
         fill(225);textSize(12);textFont(mainFont);text("Player: " + playerId, 10, 30);
         player.show()
         player.move()
+        player.attack()
         for(i = 0; i < objects.length; i++) {
             objects[i].collision()
         }
