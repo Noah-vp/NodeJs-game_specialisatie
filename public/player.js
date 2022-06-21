@@ -1,3 +1,4 @@
+var timer = 0
 class Character{
     constructor()
     {
@@ -13,6 +14,8 @@ class Character{
         this.jumpheight = 10;
         this.faceing = 'right'
         this.state = 'idle'
+        this.hp = 3
+        this.hitable = true
     }
     //show and animate the player
     show(){
@@ -229,4 +232,51 @@ class Character{
             }
         }
     }
+    hit(enemy){
+        if (frameCount % 60 == 0 && timer > 0) {
+            timer --;
+          }
+
+        if (this.hitable == false && timer == 0){
+            this.hitable = true;
+        }  
+          
+        if(enemy.state == 'swing' && enemy.faceing == 'right'){
+            this.collision(
+            {
+                x: enemy.x,
+                y: enemy.y,
+                w: 100,
+                h: 90,
+            },
+            {
+                x: this.x,
+                y: this.y,
+                w: 50,
+                h: 70,
+            })
+        }
+           if(enemy.state == 'swing' && enemy.faceing == 'left'){
+            this.collision(
+            {
+                x: enemy.x-50,
+                y: enemy.y,
+                w: 50,
+                h: 90,
+            },
+            {
+                x: this.x,
+                y: this.y,
+                w: 50,
+                h: 70,
+            })
+        }
+    }
+    collision (rect1, rect2,){
+        if(rect1.x < rect2.x+rect2.w && rect2.x < rect1.x+rect1.w &&rect1.y < rect2.y+rect2.h && rect2.y < rect1.y+rect1.h && this.hitable){
+            this.hp -= 1 
+            this.hitable = false
+            timer = 2;
+           }
+      }
 }

@@ -7,6 +7,7 @@ function preload(){
     foregroundImg =loadImage('assets/Foreground.png')
     Pointer = loadImage('assets/arrow.png')
     boxImg = loadImage('assets/box.jpg')
+    heartImg = loadImage('assets/heart.png')
 
     playerOneIdle = loadImage('assets/KnightOneIdle.gif');
     playerTwoIdle = loadImage('assets/KnightTwoIdle.gif');
@@ -36,7 +37,7 @@ var networkItems = [];
 
 function setup(){
     createCanvas(600, 600)
-    socket = io.connect('http://192.168.2.12:3000/')
+    socket = io.connect('http://192.168.2.10:3000/')
     socket.on('update', dataLoading)
     socket.on('playertag', playerIdMaker)
 
@@ -44,8 +45,11 @@ function setup(){
     objects.push(new Obj('ground', -1000, 550, 2000, 0))
     objects.push(new Obj('box', 200, 500, 50, 50))
     objects.push(new Obj('box', 300, 400, 50, 50))
+
     for(i = 0; i < 4; i++){
-        networkItems.push(new networkObject(0, -100, 'idle', 'right', i+1))
+        networkItems.push(new networkObject(0, -100, 'idle', 'right', i+1, 0))
+        objects.push(new Obj('box', -875, 500 - (i*50), 50, 50))
+        objects.push(new Obj('box', 1075, 500 - (i*50), 50, 50))
     }
 }
 
@@ -69,6 +73,7 @@ function dataLoading(data){
             networkItems[0].state = data.state
             networkItems[0].faceing = data.faceing
             networkItems[0].id = data.id
+            networkItems[0].hp = data.hp
             break;
         case 2:
             networkItems[1].x = data.x
@@ -76,6 +81,7 @@ function dataLoading(data){
             networkItems[1].state = data.state
             networkItems[1].faceing = data.faceing
             networkItems[1].id = data.id
+            networkItems[1].hp = data.hp
             break;
         case 3:
             networkItems[2].x = data.x
@@ -83,6 +89,7 @@ function dataLoading(data){
             networkItems[2].state = data.state
             networkItems[2].faceing = data.faceing
             networkItems[2].id = data.id
+            networkItems[2].hp = data.hp
             break;
         case 4:
             networkItems[3].x = data.x
@@ -90,6 +97,7 @@ function dataLoading(data){
             networkItems[3].state = data.state
             networkItems[3].faceing = data.faceing
             networkItems[3].id = data.id
+            networkItems[3].hp = data.hp
             break;
     }
 }
@@ -100,7 +108,8 @@ function sendData(){
         y: player.y,
         state: player.state,
         faceing: player.faceing,
-        id: playerId
+        id: playerId,
+        hp: player.hp
     }
     socket.emit('update', data)
 }
@@ -108,11 +117,11 @@ function sendData(){
 
 function draw(){
     cursor(CROSS)
-    background(220);
+    background('#7693B3');
     image(backgroundImg, -player.x - width, 0, 2000, 600)
     
         //disable for demo
-        if (playerId < 5){
+        if (playerId < 5 && player.state != "dead"){
             role = 'player'
         }
         else{
@@ -132,11 +141,17 @@ function draw(){
     }
     if (role == 'player'){
         fill(225);textSize(12);textFont(mainFont);text("Player: " + playerId, 10, 30);
+        for(i =0; i < player.hp; i++){
+            image(heartImg, 500+(30* i), 10)
+        }
         translate(-player.x+width/2-25, 0)
 
         player.show()
         player.move()
         player.attack()
+        for(i = 0; i < networkItems.length; i++){
+            player.hit(networkItems[i])
+        }
 
         sendData();
     }
@@ -146,6 +161,7 @@ function draw(){
     }
     for(i = 0; i < networkItems.length; i++){
         networkItems[i].show();
+        networkItems[i].hearts();
     }
     image(foregroundImg, -875, 0, 2000, 600)
 }

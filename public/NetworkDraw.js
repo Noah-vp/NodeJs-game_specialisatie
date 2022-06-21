@@ -8,6 +8,7 @@ class networkObject{
         this.id = id
         this.width = 50
         this.height = 70
+        this.hp = 3
     }
     show(){
         switch(this.state){
@@ -120,6 +121,22 @@ class networkObject{
                         }
                         break;
                 }
+            break;
+        }
+    }
+    hearts(){
+        switch(this.hp){
+            case 1:
+                image(heartImg, this.x-20, this.y - 20)
+            break;
+            case 2:
+                image(heartImg, this.x-20, this.y - 20)
+                image(heartImg, this.x+10, this.y - 20)
+            break;
+            case 3:
+            	image(heartImg, this.x-20, this.y - 20)
+                image(heartImg, this.x+10, this.y - 20)
+                image(heartImg, this.x+ 40, this.y - 20)
             break;
         }
     }
