@@ -64,6 +64,24 @@ class Character{
                     }   
                 }
                 break;
+            case 'runningLeft':
+                switch(playerId){
+                    case 1:
+                        image(playerOneRun,this.x, this.y, this.width, this.height)
+                        break;
+                    case 2:
+                        image(playerTwoRun,this.x, this.y, this.width, this.height)
+                        break;
+                    case 3:
+                        image(playerThreeRun,this.x, this.y, this.width, this.height)
+                        break;
+                    case 4:
+                        image(playerFourRun,this.x, this.y, this.width, this.height)
+                        break;
+                    default:
+                        ""
+                }  
+                break;
             case 'runningRight':
                 switch(playerId){
                     case 1:
@@ -82,23 +100,6 @@ class Character{
                         ""
                     }
                 break;
-            case 'runningLeft':
-                switch(playerId){
-                    case 1:
-                        image(playerOneRun,this.x, this.y, this.width, this.height)
-                        break;
-                    case 2:
-                        image(playerTwoRun,this.x, this.y, this.width, this.height)
-                        break;
-                    case 3:
-                        image(playerThreeRun,this.x, this.y, this.width, this.height)
-                        break;
-                    case 4:
-                        image(playerFourRun,this.x, this.y, this.width, this.height)
-                        break;
-                    default:
-                        ""
-                }  
         } 
     }
     //move the player
