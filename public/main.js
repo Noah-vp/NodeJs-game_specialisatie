@@ -1,5 +1,6 @@
 function preload(){
     backgroundImg = loadImage('assets/Background.png');
+    Pointer = loadImage('assets/arrow.png')
 
     playerOneIdle = loadImage('assets/KnightOneIdle.gif');
     playerTwoIdle = loadImage('assets/KnightTwoIdle.gif');
@@ -10,6 +11,13 @@ function preload(){
     playerTwoRun = loadImage('assets/KnightTwoRun.gif');
     playerThreeRun = loadImage('assets/KnightThreeRun.gif');
     playerFourRun = loadImage('assets/KnightFourRun.gif');
+
+    playerOneAttack = loadImage('assets/KnightOneAttack.gif');
+    playerTwoAttack = loadImage('assets/KnightTwoAttack.gif');
+    playerThreeAttack = loadImage('assets/KnightThreeAttack.gif');
+    playerFourAttack = loadImage('assets/KnightFourAttack.gif');
+
+    mainFont = loadFont('assets/gamefont.ttf');
 }
 var socket;
 var playerId = '';
@@ -100,7 +108,7 @@ function draw(){
 
 
     if (role == 'player'){
-        fill(0);textSize(12);text("Player: " + playerId, 10, 30);
+        fill(225);textSize(12);textFont(mainFont);text("Player: " + playerId, 10, 30);
         player.show()
         player.move()
         for(i = 0; i < objects.length; i++) {
@@ -109,7 +117,7 @@ function draw(){
         sendData();
     }
     else{
-        fill(0);textSize(22);textFont(mainFont);text("Spectating", width/2-50, 30)
+        fill(225);textSize(22);textFont(mainFont);text("Spectating", width/2-130, 30)
     }
     for(i = 0; i < networkItems.length; i++){
         networkItems[i].show();

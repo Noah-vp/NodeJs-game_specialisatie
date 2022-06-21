@@ -25,6 +25,7 @@ class Character{
             this.faceing = 'left'
         }
     }
+    image(Pointer, this.x + 20, this.y-20, 20, 20)
         switch(this.state){
             case 'idle':
                 if(this.faceing == 'right'){
