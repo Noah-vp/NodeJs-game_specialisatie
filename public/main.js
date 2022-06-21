@@ -4,7 +4,9 @@ function mousePressed() {
 }
 function preload(){
     backgroundImg = loadImage('assets/Background.png');
+    foregroundImg =loadImage('assets/Foreground.png')
     Pointer = loadImage('assets/arrow.png')
+    boxImg = loadImage('assets/box.jpg')
 
     playerOneIdle = loadImage('assets/KnightOneIdle.gif');
     playerTwoIdle = loadImage('assets/KnightTwoIdle.gif');
@@ -39,7 +41,9 @@ function setup(){
     socket.on('playertag', playerIdMaker)
 
     player = new Character()
-    objects.push(new Obj('ground', 0, 550, width, 0))
+    objects.push(new Obj('ground', -1000, 550, 2000, 0))
+    objects.push(new Obj('box', 200, 500, 50, 50))
+    objects.push(new Obj('box', 300, 400, 50, 50))
     for(i = 0; i < 4; i++){
         networkItems.push(new networkObject(0, -100, 'idle', 'right', i+1))
     }
@@ -103,29 +107,45 @@ function sendData(){
 
 
 function draw(){
-    //disable for demo
-    if (playerId < 5){
-        role = 'player'
-    }
-
     cursor(CROSS)
-    background(backgroundImg);
+    background(220);
+    image(backgroundImg, -player.x - width, 0, 2000, 600)
+    
+        //disable for demo
+        if (playerId < 5){
+            role = 'player'
+        }
+        else{
+            role = 'spectator'
+        }
+    if (role == 'spectator'){
+            fill(225);textSize(22);textFont(mainFont);text("Spectating", width/2-130, 30)
+            translate(-player.x+width/2-25, 0)
 
-
+            if (keyIsDown(LEFT_ARROW)) {
+                player.x -= 15;
+              }
+            
+              if (keyIsDown(RIGHT_ARROW)) {
+                player.x += 15;
+              }
+    }
     if (role == 'player'){
         fill(225);textSize(12);textFont(mainFont);text("Player: " + playerId, 10, 30);
+        translate(-player.x+width/2-25, 0)
+
         player.show()
         player.move()
         player.attack()
-        for(i = 0; i < objects.length; i++) {
-            objects[i].collision()
-        }
+
         sendData();
     }
-    else{
-        fill(225);textSize(22);textFont(mainFont);text("Spectating", width/2-130, 30)
+    for(i = 0; i < objects.length; i++) {
+        objects[i].collision()
+        objects[i].show()
     }
     for(i = 0; i < networkItems.length; i++){
         networkItems[i].show();
     }
+    image(foregroundImg, -875, 0, 2000, 600)
 }

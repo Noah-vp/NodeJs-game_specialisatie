@@ -3,7 +3,7 @@ class Character{
     {
         this.width = 50
         this.height = 70
-        this.x = 100
+        this.x = 50
         this.y = 100
         this.yvel = 0;
         this.xvel = 0;
