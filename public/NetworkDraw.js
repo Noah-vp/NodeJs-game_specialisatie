@@ -122,6 +122,36 @@ class networkObject{
                         break;
                 }
             break;
+            case 'dead':
+                switch(this.id){
+                    case 1:
+                            image(playerOneDead,this.x-30, this.y- 11 )
+                            if(playerOneDead.getCurrentFrame() == 12){
+                                playerOneDead.setFrame(12);
+                            }
+                            break;
+                        case 2:
+                            image(playerTwoDead,this.x-30, this.y- 11 )
+                            if(playerTwoDead.getCurrentFrame() == 12){
+                                playerTwoDead.setFrame(12)
+                            }
+                            break;
+                        case 3:
+                            image(playerThreeDead,this.x-30, this.y- 11 )
+                            if(playerThreeDead.getCurrentFrame() == 12){
+                                playerThreeDead.setFrame(12)
+                            }
+                            break;
+                        case 4:
+                            image(playerFourDead,this.x-30, this.y- 11)
+                            if(playerFourDead.getCurrentFrame() == 12){
+                                playerFourDead.pause();
+                            }
+                            break;
+                        default:
+                            ""
+                }
+            break;
         }
     }
     hearts(){

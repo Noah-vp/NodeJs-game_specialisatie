@@ -4,7 +4,7 @@ class Character{
     {
         this.width = 50
         this.height = 70
-        this.x = 50
+        this.x = random(-800, 100);
         this.y = 100
         this.yvel = 0;
         this.xvel = 0;
@@ -140,6 +140,37 @@ class Character{
                         break;
                 }
                 break;
+            case 'dead': 
+                switch(playerId){
+                    case 1:
+                            image(playerOneDead,this.x-30, this.y- 11 )
+                            if(playerOneDead.getCurrentFrame() == 12){
+                                playerOneDead.setFrame(12);
+                            }
+                            break;
+                        case 2:
+                            image(playerTwoDead,this.x-30, this.y- 11 )
+                            if(playerTwoDead.getCurrentFrame() == 12){
+                                playerTwoDead.setFrame(12)
+                            }
+                            break;
+                        case 3:
+                            image(playerThreeDead,this.x-30, this.y- 11 )
+                            if(playerThreeDead.getCurrentFrame() == 12){
+                                playerThreeDead.setFrame(12)
+                            }
+                            break;
+                        case 4:
+                            image(playerFourDead,this.x-30, this.y- 11)
+                            if(playerFourDead.getCurrentFrame() == 12){
+                                playerFourDead.pause();
+                            }
+                            break;
+                        default:
+                            ""
+                }
+            break;
+
         } 
     }
     //move the player
@@ -233,6 +264,9 @@ class Character{
         }
     }
     hit(enemy){
+        if (this.hp == 0){
+            this.state = 'dead'
+        }
         if (frameCount % 60 == 0 && timer > 0) {
             timer --;
           }
@@ -276,7 +310,7 @@ class Character{
         if(rect1.x < rect2.x+rect2.w && rect2.x < rect1.x+rect1.w &&rect1.y < rect2.y+rect2.h && rect2.y < rect1.y+rect1.h && this.hitable){
             this.hp -= 1 
             this.hitable = false
-            timer = 2;
+            timer = 4;
            }
       }
 }

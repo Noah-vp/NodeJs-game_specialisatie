@@ -15,7 +15,8 @@ function newConnection(socket){
     var newpl = playerindex.push(socket.id)
     var id = playerindex.indexOf(socket.id) + 1
     users = {
-        id: id
+        id: id,
+        playerindex: playerindex
     };
     socket.on('update', ClientMsg)
     io.sockets.emit('playertag', users)

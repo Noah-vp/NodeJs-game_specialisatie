@@ -24,6 +24,11 @@ function preload(){
     playerThreeAttack = loadImage('assets/KnightThreeAttack.gif');
     playerFourAttack = loadImage('assets/KnightFourAttack.gif');
 
+    playerOneDead = loadImage('assets/KnightOneDead.gif');
+    playerTwoDead = loadImage('assets/KnightTwoDead.gif');
+    playerThreeDead = loadImage('assets/KnightThreeDead.gif');
+    playerFourDead = loadImage('assets/KnightFourDead.gif');
+
     mainFont = loadFont('assets/gamefont.ttf');
 }
 var socket;
@@ -32,36 +37,67 @@ var player;
 var role;
 var objects = [];
 var networkItems = [];
+var win = false
 
 
 
 function setup(){
     createCanvas(600, 600)
-    socket = io.connect('http://192.168.2.10:3000/')
+    socket = io.connect('http://192.168.2.12:3000/')
     socket.on('update', dataLoading)
     socket.on('playertag', playerIdMaker)
 
     player = new Character()
     objects.push(new Obj('ground', -1000, 550, 2000, 0))
-    objects.push(new Obj('box', 200, 500, 50, 50))
-    objects.push(new Obj('box', 300, 400, 50, 50))
-
+    {
     for(i = 0; i < 4; i++){
         networkItems.push(new networkObject(0, -100, 'idle', 'right', i+1, 0))
+    }
+    for(i = 0; i<7; i++){
         objects.push(new Obj('box', -875, 500 - (i*50), 50, 50))
         objects.push(new Obj('box', 1075, 500 - (i*50), 50, 50))
     }
+    for(i=0; i<5; i++){
+        objects.push(new Obj('box', -700 + (i*50), 500, 50, 50))
+    }
+    for(i = 0; i<3; i++){
+        objects.push(new Obj('box', -650 + (i*50), 450, 50, 50))
+}
+    objects.push(new Obj('box', -600, 400, 50, 50))
+    objects.push(new Obj('box', -750, 350, 50, 50))
+    //objects.push(new Obj('box', -250, 350, 50, 50))
+    objects.push(new Obj('box', -300, 350, 50, 50))
+    //objects.push(new Obj('box', -50, 350, 50, 50))
+    objects.push(new Obj('box', 0, 350, 50, 50))
+    objects.push(new Obj('box', -150, 450, 50, 50))
+    objects.push(new Obj('box', 100, 250, 50, 50))
+    //objects.push(new Obj('box', 150, 250, 50, 50))
+
+    objects.push(new Obj('box', 200, 500, 50, 50))
+    objects.push(new Obj('box', 150, 500, 50, 50))
+    objects.push(new Obj('box', 250, 500, 50, 50))
+    //objects.push(new Obj('box', 300, 500, 50, 50))
+    objects.push(new Obj('box', 200, 450, 50, 50))
+    //objects.push(new Obj('box', 250, 450, 50, 50))
+
+    objects.push(new Obj('box', 400, 500, 50, 50))
+    objects.push(new Obj('box', 550, 500, 50, 50))
+    objects.push(new Obj('box', 650, 500, 50, 50))
+    objects.push(new Obj('box', 700, 400, 50, 50))
+    objects.push(new Obj('box', 850, 500, 50, 50))
+    
+}
 }
 
 //function to assign a playerId
 function playerIdMaker(users) {
     if (playerId == ''){
          playerId = users.id;
-         /*
-         enble again for real demo
          if (users.id < 5){
             role = 'player'
-         }*/
+         }
+        else{
+            role = 'spectator'}
     }
 }
 //function to load incomming data
@@ -119,14 +155,6 @@ function draw(){
     cursor(CROSS)
     background('#7693B3');
     image(backgroundImg, -player.x - width, 0, 2000, 600)
-    
-        //disable for demo
-        if (playerId < 5 && player.state != "dead"){
-            role = 'player'
-        }
-        else{
-            role = 'spectator'
-        }
     if (role == 'spectator'){
             fill(225);textSize(22);textFont(mainFont);text("Spectating", width/2-130, 30)
             translate(-player.x+width/2-25, 0)
@@ -147,13 +175,25 @@ function draw(){
         translate(-player.x+width/2-25, 0)
 
         player.show()
+        if(player.state != "dead"){
         player.move()
         player.attack()
+        var enemysleft = 0;
         for(i = 0; i < networkItems.length; i++){
             player.hit(networkItems[i])
+            if (networkItems[i].state == 'dead'){
+                enemysleft += 1 
+                console.log(enemysleft)
+                if (enemysleft == 3){
+                    win = true
+                }
+            }
+        else{
+            totalhealth = 0
         }
-
+        }
         sendData();
+    }
     }
     for(i = 0; i < objects.length; i++) {
         objects[i].collision()
