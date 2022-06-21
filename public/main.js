@@ -39,7 +39,7 @@ function setup(){
     socket.on('playertag', playerIdMaker)
 
     player = new Character()
-    objects.push(new Obj('ground', 0, 550, 600, 0))
+    objects.push(new Obj('ground', 0, 550, width, 0))
     for(i = 0; i < 4; i++){
         networkItems.push(new networkObject(0, -100, 'idle', 'right', i+1))
     }

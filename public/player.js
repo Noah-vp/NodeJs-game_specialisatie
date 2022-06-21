@@ -25,7 +25,6 @@ class Character{
             this.faceing = 'left'
         }
     }
-    console.log(this.state)
     image(Pointer, this.x + 20, this.y-20, 20, 20)
         switch(this.state){
             case 'idle':
@@ -188,7 +187,7 @@ class Character{
         if (shoot){
             switch(playerId){
                 case 1:
-                    if(playerOneAttack.getCurrentFrame() == 10){
+                    if(playerOneAttack.getCurrentFrame() == 5){
                         this.state = 'idle'
                         playerOneAttack.setFrame(0)
                         shoot = false
@@ -198,7 +197,7 @@ class Character{
                     }
                 break;
                 case 2:
-                    if(playerTwoAttack.getCurrentFrame() == 10){
+                    if(playerTwoAttack.getCurrentFrame() == 5){
                         this.state = 'idle'
                         playerTwoAttack.setFrame(0)
                         shoot = false
@@ -208,7 +207,7 @@ class Character{
                     }
                 break;
                 case 3:
-                    if(playerThreeAttack.getCurrentFrame() == 10){
+                    if(playerThreeAttack.getCurrentFrame() == 5){
                         this.state = 'idle'
                         playerThreeAttack.setFrame(0)
                         shoot = false
@@ -218,7 +217,7 @@ class Character{
                     }
                 break;
                 case 4:
-                    if(playerFourAttack.getCurrentFrame() == 10){
+                    if(playerFourAttack.getCurrentFrame() == 5){
                         this.state = 'idle'
                         playerFourAttack.setFrame(0)
                         shoot = false
